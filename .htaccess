@@ -6,6 +6,7 @@ Options -indexes
 
 # Отключаем вывод информации о сервере
 ServerSignature Off
+php_flag expose_php Off
 
 php_value mbstring.func_overload "7"
 
@@ -62,11 +63,6 @@ php_value mbstring.func_overload "7"
 </IfModule>
 
 RewriteEngine on
-RewriteBase /
-
-# Если запрошенная директория или файл существуют, то используем их
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
 
 # Универсальный редирект с домена С www. на домен БEЗ www
 <IfModule mod_rewrite.c>
@@ -76,5 +72,14 @@ RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
 </IfModule>
 
+
+# if a directory or a file exists, use it directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# otherwise forward it to index.php
+RewriteRule . index.php
+
 # Закрываем доступ к .htaccess
 RewriteRule ^\.htaccess$ - [F]
+
