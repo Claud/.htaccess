@@ -14,81 +14,81 @@ php_value mbstring.func_overload "7"
 # github.com/rails/rails/commit/123eb25#commitcomment-118920
 # Use ChromeFrame if it's installed for a better experience for the poor IE folk
 <IfModule mod_setenvif.c>
-	<IfModule mod_headers.c>
-		BrowserMatch MSIE ie
-		Header set X-UA-Compatible "IE=Edge,chrome=1" env=ie
-	</IfModule>
+    <IfModule mod_headers.c>
+        BrowserMatch MSIE ie
+        Header set X-UA-Compatible "IE=Edge,chrome=1" env=ie
+    </IfModule>
 </IfModule>
 
 # Ужимаем статические файлы.
 <IfModule mod_deflate.c>
-	# Выставляем заголовок Content-Encoding: gzip.
-	AddEncoding gzip .gz
-	
-	# Для favicon.ico
-	AddOutputFilterByType DEFLATE image/x-icon
-	# Для CSS-файлов.
-	AddOutputFilterByType DEFLATE text/css
-	# Для JavaScript-файлов.
-	AddOutputFilterByType DEFLATE text/javascript
-	AddOutputFilterByType DEFLATE application/x-javascript
-	AddOutputFilterByType DEFLATE application/javascript
-	AddOutputFilterByType DEFLATE application/json
-	# Для остальных типов файлов.
-	text/plain
-	text/x-component
-	text/xml
-	application/xml
-	application/rss+xml
-	application/atom+xml
-	font/truetype
-	font/opentype
-	application/vnd.ms-fontobject
-	image/svg+xml
-	
-	# Отключаем сжатие для тех браузеров, у которых проблемы
-	# с его распознаванием.
-	BrowserMatch "MSIE [456]" no_gzip dont-vary
-	BrowserMatch "SV1;" !no_gzip !dont-vary
-	BrowserMatch "Opera" !no_gzip !dont-vary
-	BrowserMatch "Firefox/[0-3]\." gzip-only-text/html
-	BrowserMatch "Firefox/3\.[1-9]" !gzip-only-text/html
-	BrowserMatch "Chrome/2" gzip-only-text/html
-	BrowserMatch "Safari" gzip-only-text/html
-	BrowserMatch "Konqueror" gzip-only-text/html
+    # Выставляем заголовок Content-Encoding: gzip.
+    AddEncoding gzip .gz
+    
+    # Для favicon.ico
+    AddOutputFilterByType DEFLATE image/x-icon
+    # Для CSS-файлов.
+    AddOutputFilterByType DEFLATE text/css
+    # Для JavaScript-файлов.
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/json
+    # Для остальных типов файлов.
+    text/plain
+    text/x-component
+    text/xml
+    application/xml
+    application/rss+xml
+    application/atom+xml
+    font/truetype
+    font/opentype
+    application/vnd.ms-fontobject
+    image/svg+xml
+    
+    # Отключаем сжатие для тех браузеров, у которых проблемы
+    # с его распознаванием.
+    BrowserMatch "MSIE [456]" no_gzip dont-vary
+    BrowserMatch "SV1;" !no_gzip !dont-vary
+    BrowserMatch "Opera" !no_gzip !dont-vary
+    BrowserMatch "Firefox/[0-3]\." gzip-only-text/html
+    BrowserMatch "Firefox/3\.[1-9]" !gzip-only-text/html
+    BrowserMatch "Chrome/2" gzip-only-text/html
+    BrowserMatch "Safari" gzip-only-text/html
+    BrowserMatch "Konqueror" gzip-only-text/html
 </IfModule>
 
 <IfModule mod_expires.c>
-	# Включаем кэширование для всех файлов сроком на 10 лет.
-	ExpiresActive On
-	ExpiresDefault "access plus 10 years"
-	
-	# Отключаем его для HTML-файлов.
-	<FilesMatch .*\.(shtml|html|phtml|php)$>
-		ExpiresActive Off
-	</FilesMatch>
+    # Включаем кэширование для всех файлов сроком на 10 лет.
+    ExpiresActive On
+    ExpiresDefault "access plus 10 years"
+    
+    # Отключаем его для HTML-файлов.
+    <FilesMatch .*\.(shtml|html|phtml|php)$>
+        ExpiresActive Off
+    </FilesMatch>
 </IfModule>
 
 <IfModule mod_headers.c>
-	# Указываем прокси-серверам передавать заголовок User-Agent
-	# для корректного распознавания сжатия.
-	Header append Vary User-Agent env=!dont-vary
-	
-	# Запрещаем кэширование на уровне прокси-сервера для всех
-	# файлов, для которых у нас выставлено сжатие.
-	<FilesMatch .*\.(css|js|php|phtml|shtml|html|xml)$>
-		Header append Cache-Control: "private, must-revalidate"
-	</FilesMatch>
+    # Указываем прокси-серверам передавать заголовок User-Agent
+    # для корректного распознавания сжатия.
+    Header append Vary User-Agent env=!dont-vary
+    
+    # Запрещаем кэширование на уровне прокси-сервера для всех
+    # файлов, для которых у нас выставлено сжатие.
+    <FilesMatch .*\.(css|js|php|phtml|shtml|html|xml)$>
+        Header append Cache-Control: "private, must-revalidate"
+    </FilesMatch>
 </IfModule>
 
 RewriteEngine on
 
 # Универсальный редирект с домена С www. на домен БEЗ www.
 <IfModule mod_rewrite.c>
-	RewriteEngine On
-	RewriteCond %{HTTPS} !=on
-	RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
-	RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+    RewriteEngine On
+    RewriteCond %{HTTPS} !=on
+    RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+    RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
 </IfModule>
 
 
