@@ -35,16 +35,16 @@ php_value mbstring.func_overload "7"
     AddOutputFilterByType DEFLATE application/javascript
     AddOutputFilterByType DEFLATE application/json
     # Для остальных типов файлов.
-    text/plain
-    text/x-component
-    text/xml
-    application/xml
-    application/rss+xml
-    application/atom+xml
-    font/truetype
-    font/opentype
-    application/vnd.ms-fontobject
-    image/svg+xml
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/x-component
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/atom+xml
+    AddOutputFilterByType DEFLATE font/truetype
+    AddOutputFilterByType DEFLATE font/opentype
+    AddOutputFilterByType DEFLATE application/vnd.ms-fontobject
+    AddOutputFilterByType DEFLATE image/svg+xml
     
     # Отключаем сжатие для тех браузеров, у которых проблемы
     # с его распознаванием.
