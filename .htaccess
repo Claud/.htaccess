@@ -106,10 +106,24 @@ RewriteEngine on
 # Закрывает доступ к служебным папкам и файлам, которые начинаются на . или ~.
 # Например: факл .htaccess, директория .svn
 <IfModule mod_rewrite.c>
-    RewriteRule (?:^|/)(?:\..*|~)$ - [F]
+    RewriteRule (?:^|/)(?:\..*)$ - [F]
 </IfModule>
 
-# Защищает важные файлы от получения их содержимого через браузер.
+<FilesMatch "(package\.json|gruntfile\.js|gulpfile\.js|bower\.json|composer\.(lock|json)|readme\.md)$">
+    # Apache < 2.3
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+        Satisfy All
+    </IfModule>
+
+    # Apache ≥ 2.3
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+</FilesMatch>
+
+# Защищает важные файлы (по расширению) от получения их содержимого через браузер.
 <FilesMatch "(^#.*#|\.(bak|config|dist|fla|in[ci]|log|psd|sh|sql|sw[op]|bat|db)|~)$">
     # Apache < 2.3
     <IfModule !mod_authz_core.c>
