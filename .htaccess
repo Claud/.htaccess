@@ -152,11 +152,18 @@ RewriteEngine on
     Header set X-Content-Type-Options "nosniff"
 </IfModule>
 
-<IfModule mod_headers.c>
-    Header set X-XSS-Protection "1; mode=block"
-    <FilesMatch "\.(appcache|atom|crx|css|cur|eot|f4[abpv]|flv|gif|htc|ico|jpe?g|js|json(ld)?|m4[av]|manifest|map|mp4|oex|og[agv]|opus|otf|pdf|png|rdf|rss|safariextz|svgz?|swf|tt[cf]|vcf|vtt|webapp|web[mp]|woff|xml|xpi)$">
-        Header unset X-XSS-Protection
-    </FilesMatch>
+# Защита от XSS в браузере. 
+# Работает только на IE и потенциально может принести проблемы со сложными URI.
+#<IfModule mod_headers.c>
+#    Header set X-XSS-Protection "1; mode=block"
+#    <FilesMatch "\.(appcache|atom|crx|css|cur|eot|f4[abpv]|flv|gif|htc|ico|jpe?g|js|json(ld)?|m4[av]|manifest|map|mp4|oex|og[agv]|opus|otf|pdf|png|rdf|rss|safariextz|svgz?|swf|tt[cf]|vcf|vtt|webapp|web[mp]|woff|xml|xpi)$">
+#        Header unset X-XSS-Protection
+#    </FilesMatch>
+#</IfModule>
+
+# Предотвращает частичный листинг файлов.
+<IfModule mod_negotiation.c>
+    Options -MultiViews
 </IfModule>
 
 # ##############################################################################
